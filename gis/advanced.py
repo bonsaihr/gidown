@@ -12,6 +12,7 @@ class QuerySetting:
     def urlencode(self):
         return self._setting
 
+
     def __add__(self, other):
         if isinstance(other, QuerySettings):
             return other + self
@@ -44,6 +45,9 @@ class QuerySettings:
 
 class Size:
 
+    def __init__(self):
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
+
     ANY = QuerySetting("")
     LARGE = QuerySetting("isz:l")
     MEDIUM = QuerySetting("isz:m")
@@ -54,6 +58,9 @@ class Size:
         return QuerySetting("isz:ex,iszw:{},iszh:{}".format(w, h))
 
     class LargerThen:
+
+        def __init__(self):
+            raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
 
         S_400x300 = QuerySetting("isz:lt,islt:qsvga")
         S_640x480 = QuerySetting("isz:lt,islt:vga")
@@ -80,7 +87,7 @@ class Size:
 class Color:
 
     def __init__(self):
-        raise NotImplementedError()
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
 
     ANY = QuerySetting("")
     FULL = QuerySetting("ic:color")
@@ -104,7 +111,7 @@ class Color:
 class Type:
 
     def __init__(self):
-        raise NotImplementedError()
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
 
     ANY = QuerySetting("")
     FACE = QuerySetting("itp:face")
@@ -114,6 +121,10 @@ class Type:
 
 
 class Time:
+
+    def __init__(self):
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
+
     ANY = QuerySetting("")
     PAST_SECOND = QuerySetting("qdr:d")
     PAST_24H = QuerySetting("qdr:d")
@@ -134,13 +145,25 @@ class Time:
 
 
 class FileFormat:
+
+    def __init__(self):
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
+
     ANY = QuerySetting("")
     JPG = QuerySetting("ift:jpg")
+    GIF = QuerySetting("ift:gif")
     PNG = QuerySetting("ift:png")
     BMP = QuerySetting("ift:mbp")
+    SVG = QuerySetting("ift:svg")
+    WEBP = QuerySetting("ift:webp")
+    ICO = QuerySetting("ift:ico")
 
 
 class AspectRatio:
+
+    def __init__(self):
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
+
     ANY = QuerySetting("")
     TALL = QuerySetting("iar:t")
     SQUARE = QuerySetting("iar:s")
@@ -149,6 +172,7 @@ class AspectRatio:
 
 
 class UsageRights:
+
     def __init__(self):
         raise NotImplementedError()
 
@@ -159,9 +183,10 @@ class UsageRights:
     NONCOMMERCIAL_REUSE = QuerySetting("sur:f")
 
 
-class SORT:
+class Sorting:
+
     def __init__(self):
-        raise NotImplementedError()
+        raise NotImplementedError("The {} class is not meant to be instanced.".format(self.__class__.__name__))
 
     BY_DATE = QuerySetting("sbd:1")
     BY_RELEVANCE = QuerySetting("sbd:0")
