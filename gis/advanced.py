@@ -133,7 +133,7 @@ class Time:
     _valid_measures = "nhdwm"
 
     @staticmethod
-    def past(self, value, measure="h"):
+    def past(value, measure="h"):
         if measure not in Time._valid_measures:
             raise ValueError("Unknown measure {}, must be one of: {}".format(measure, Time._valid_measures))
         return "tbs=qdr:{}{}".format(measure, "" if value <= 1 else value)
