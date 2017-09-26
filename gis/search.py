@@ -1,33 +1,53 @@
+"""
+gis.search
+~~~~~~~~~~~~
+This module implements functions and classes for acquiring images from google image search.
+
+:license: Apache2, see LICENSE for more details.
+"""
+
 import json
 from imghdr import what
+from typing import List
 from urllib.parse import quote_plus
 
 import requests
 from bs4 import BeautifulSoup
 
-from gis.advanced import QuerySettings
+from gis.query import QueryBuilder
+from gis.advanced import QuerySettings, QuerySetting
 
 
 class GoogleSearchImage:
 
+    """
+    Class used to store information about images from google image search. 
+    Two **GoogleSearchImage** are considered the same if they have the same image URL.
+    """
+
     def __init__(self, google_json_dict: dict):
+        """
+        
+        
+        :param google_json_dict: Dictionary as found in <div> for each image on google image search pages  
+        """
 
-        self.image_url = google_json_dict["ou"]
-        self.thumbnail_url = google_json_dict["tu"]
+        self.url = google_json_dict["ou"]
+        self.tb_url = google_json_dict["tu"]
 
-        self.source_page_url = google_json_dict["ru"]
-        self.source_domain = google_json_dict["isu"]
+        self.src_url = google_json_dict["ru"]
+        self.src_domain = google_json_dict["isu"]
 
         self.title = "pt"
-        self.description = "s"
+        self.desc = "s"
 
         self.width = google_json_dict["ow"]
         self.height = google_json_dict["oh"]
-
-        self.small_width = google_json_dict["tw"]
-        self.small_height = google_json_dict["th"]
         self.type = google_json_dict["ity"]
-        self.thumbnail_type = google_json_dict["ity"]
+
+        self.tb_width = google_json_dict["tw"]
+        self.tb_height = google_json_dict["th"]
+        self.tb_type = google_json_dict["ity"]
 
         self.image = None
         self.thumbnail = None
@@ -35,73 +55,109 @@ class GoogleSearchImage:
     def __eq__(self, other):
         if not hasattr(other, "image_url"):
             return False
-        return self.image_url == other.image_url
+        return self.url == other.image_url
 
     def __hash__(self):
-        return hash(self.image_url)
+        return hash(self.url)
 
     def __str__(self):
-        return "Downloadable {} at {}".format(self.type, self.image_url)
+        return "Downloadable {} at {}".format(self.type, self.url)
 
     def download(self, download_all=False) -> None:
-        self.image = requests.get(self.image_url).content
+        """
+        Download the image and store raw bytes into **self.image**.
+        Image type (extension) is automatically detected from the raw bytes if possible (**type**).
+
+        :param download_all: Also download thumbnail and store it in **self.thumbnail**.
+        """
+        self.image = requests.get(self.url).content
         if download_all:
             self.download_thumbnail()
         ext = what(None, self.image)
         self.type = ext if ext is not None else self.type
 
     def download_thumbnail(self) -> None:
-        self.thumbnail = requests.get(self.thumbnail_url).content
+        """
+        Download the thumbnail and store raw bytes into **self.thumbnail**.
+        Image type (extension) is automatically detected from the raw bytes if possible (**thumbnail_type**).
+        """
+        self.thumbnail = requests.get(self.tb_url).content
         ext = what(None, self.image)
-        self.thumbnail_type = ext if ext is not None else self.thumbnail_type
+        self.tb_type = ext if ext is not None else self.tb_type
 
-    def _save(self, img_data, filename):
+    @staticmethod
+    def _save(img_data, filename):
         with open(filename, "wb") as fout:
             fout.write(img_data)
 
-    def save(self, filename, auto_extension=False):
+    def save(self, filename: str, auto_ext=False):
+        """
+        Save image to filesystem. If the image was not downloaded using **download** it is done now.
+               
+        Image type (extension) is automatically detected from the raw bytes if possible, otherwise the type is
+        determined from the google image search dictionary.
+
+        :param filename: Path to store the image to.
+        :param auto_ext: Automatically add the file extension.
+        """
         if self.image is None:
             self.download()
 
-        if auto_extension:
+        if auto_ext:
             filename = "{}.{}".format(filename, self.type)
         self._save(self.image, filename)
 
-    def save_thumbnail(self, filename, auto_extension=False):
+    def save_thumbnail(self, filename, auto_ext=False):
+        """
+        Save thumbnail to filesystem. If the thumbnail was not downloaded using **download_thumbnail** it is done now.
+               
+        Image type (extension) is automatically detected from the raw bytes if possible, otherwise the type is
+        determined from the google image search dictionary.
+
+        :param filename: Path to store the thumbnail to.
+        :param auto_ext: Automatically add the file extension.
+        """
         if self.thumbnail is None:
             self.download_thumbnail()
 
-        if auto_extension:
-            filename = "{}.{}".format(filename, self.thumbnail_type)
+        if auto_ext:
+            filename = "{}.{}".format(filename, self.tb_type)
         self._save(self.thumbnail, filename)
 
 
-class Request:
-    _user_agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"
+_URL = "https://www.google.hr/search"
 
-    def __init__(self):
-        self._url = "https://www.google.hr/search"
-        self._headers = {'User-Agent': Request._user_agent}
 
-    def _generate_url(self, query, settings, autocorrect=False):
-        q = {"tbm": "isch",
-             "tbs": QuerySettings(settings).urlencode(),
-             "q": quote_plus(query.strip()),
-             "source": "lnms"}
-        if not autocorrect:
-            q["nfpr"] = 1
-        return "{}?{}".format(self._url, "&".join("{}={}".format(k, v) for k, v in q.items()))
+def _generate_url(query, settings, autocorrect=False):
+    q = {"tbm": "isch",
+         "tbs": QuerySettings(settings).urlencode(),
+         "q": quote_plus(query.strip()),
+         "source": "lnms"}
+    if not autocorrect:
+        q["nfpr"] = 1
+    return "{}?{}".format(_URL, "&".join("{}={}".format(k, v) for k, v in q.items()))
 
-    def _fetch_html(self, url):
-        req = requests.get(url, headers=self._headers)
-        html_doc = req.text
-        return html_doc
 
-    def image_query(self, query, *settings, autocorrect=False):
-        url = self._generate_url(query, settings, autocorrect)
-        html = self._fetch_html(url)
+def _fetch_html(url):
+    req = requests.get(url, headers={'User-Agent': _USER_AGENT})
+    html_doc = req.text
+    return html_doc
 
-        soup = BeautifulSoup(html, 'html.parser')
-        divs = soup.find_all("div", {"class": "rg_meta"})
 
-        return list(set(GoogleSearchImage(json.loads(div.text)) for div in divs))
+def image_query(query: str or QueryBuilder, *restrictions: QuerySetting, autocorrect=False) -> List[GoogleSearchImage]:
+    """
+    Query google for images that satisfy all the restrictions.
+
+    :param query: Query string, supports all advanced google search options.(see gis.query for wrappers around often used options) 
+    :param restrictions: Variable amount of advanced search options. (see gis.advanced)
+    :param autocorrect: Auto-correct queries that have a high likelihood of a misspell (e.q. "color grenn")
+    :return: List of unique GoogleSearchImage objects that can be downloaded and saved.
+    """
+    url = _generate_url(query, restrictions, autocorrect)
+    html = _fetch_html(url)
+
+    soup = BeautifulSoup(html, 'html.parser')
+    divs = soup.find_all("div", {"class": "rg_meta"})
+
+    return list(set(GoogleSearchImage(json.loads(div.text)) for div in divs))
