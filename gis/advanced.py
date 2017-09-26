@@ -1,7 +1,7 @@
 """
 gis.advanced
 ~~~~~~~~~~~~
-This module implements advances image search options.
+This module contains advanced image search options.
 
 :license: Apache2, see LICENSE for more details.
 """
@@ -25,12 +25,15 @@ class QuerySetting:
         
         """
 
-        if not re.match("^.+:.+$", setting_str):
+        if setting_str and not re.match("^.+:.+$", setting_str):
             raise ValueError("Setting string must be in the format <key>:<value>, {} was given".format(setting_str))
         self._setting = setting_str
 
     def __str__(self):
         return self._setting
+
+    def __repr__(self):
+        return str(self)
 
     def urlencode(self) -> str:
         """
@@ -64,6 +67,9 @@ class QuerySettings:
 
     def __str__(self):
         return " and ".join(str(setting) for setting in self._settings)
+
+    def __repr__(self):
+        return str(self)
 
     def urlencode(self) -> str:
         """ 

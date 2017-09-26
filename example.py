@@ -1,40 +1,49 @@
+"""
+Example script that downloads images for 3 actors:
+
+* Kit Harington
+* Iwan Rheon
+* Peter Dinklage
+
+and saves them to *./out*.
+"""
 import os
 
 from gis.advanced import Type, Size
-from gis import Request
+from gis import image_query
 
 from multiprocessing import Pool, cpu_count
-import tqdm
 
 
 def save(args):
+    """
+    Save image to disk.
+    
+    :param args: tuple of (image: GoogleSearchImage, root: str, name: str)
+    """
     image, root, name = args
-    image.save(os.path.join(root, name), auto_extension=True)
+    image.save(os.path.join(root, name), auto_ext=True)
 
 
 def main():
-    num_img = 20
+    """
+    Download images for 3 actors using multiple cores and save them to *./out*.
+    """
+    num_imgs = 20
     output_dir = "out"
     pool = Pool(cpu_count())
 
-    actors = [
-        "Kit Harington",
-        "Iwan Rheon",
-        "Peter Dinklage",
+    actors = ["Kit Harington", "Iwan Rheon", "Peter Dinklage"]
 
-    ]
-    with tqdm.tqdm(total=len(actors)) as pbar:
+    for actor in actors:
 
-        for actor in actors:
-            pbar.desc = "{:20s}".format(actor)
-            images = Request().image_query(actor, Type.FACE, Size.LARGE)
+        images = image_query(actor, Type.FACE, Size.LARGE)
 
-            actor_output_dir = os.path.join(output_dir, actor.replace(" ", "_"))
-            if not os.path.exists(actor_output_dir):
-                os.makedirs(actor_output_dir)
+        actor_output_dir = os.path.join(output_dir, actor.replace(" ", "_"))
+        if not os.path.exists(actor_output_dir):
+            os.makedirs(actor_output_dir)
 
-            pool.map(save, ((img, actor_output_dir, str(i)) for i, img in enumerate(images[:num_img])))
-            pbar.update(1)
+        pool.map(save, ((img, actor_output_dir, str(i)) for i, img in enumerate(images[:num_imgs])))
 
 
 if __name__ == '__main__':
