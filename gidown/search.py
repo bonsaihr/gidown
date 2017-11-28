@@ -1,5 +1,5 @@
 """
-gis.search
+gidown.search
 ~~~~~~~~~~~~
 This module implements functions and classes for acquiring images from google image search.
 

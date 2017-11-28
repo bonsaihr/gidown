@@ -1,5 +1,5 @@
 """
-gis.query
+gidown.query
 ~~~~~~~~~~~~
 This module implements advances query options such as site restriction and excluding words.
 

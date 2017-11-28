@@ -1,5 +1,5 @@
 """
-gis.advanced
+gidown.advanced
 ~~~~~~~~~~~~
 This module contains advanced image search options.
 
