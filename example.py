@@ -17,7 +17,7 @@ from multiprocessing import Pool, cpu_count
 
 def save(args):
     """
-    Save image to disk.
+    Save image to disk. Wrapper to be used with multiprocessing.Pool.
     
     :param args: tuple of (image: GoogleSearchImage, root: str, name: str)
     """
@@ -27,7 +27,7 @@ def save(args):
 
 def main():
     """
-    Download images for 3 actors using multiple cores and save them to *./out*.
+    Download images for 3 actors and save them to *./out*.
     """
     num_imgs = 20
     output_dir = "out"

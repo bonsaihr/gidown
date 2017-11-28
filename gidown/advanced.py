@@ -279,7 +279,7 @@ class Time:
         """
         if unit not in Time._valid_measures:
             raise ValueError("Unknown measure {}, must be one of: {}".format(unit, Time._valid_measures))
-        return "tbs=qdr:{}{}".format(unit, "" if amount <= 1 else amount)
+        return QuerySetting("tbs=qdr:{}{}".format(unit, "" if amount <= 1 else amount))
 
     @staticmethod
     def range(date_from: datetime.date, date_to: datetime.date) ->QuerySetting:

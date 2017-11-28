@@ -14,8 +14,8 @@ from urllib.parse import quote_plus
 import requests
 from bs4 import BeautifulSoup
 
-from gis.query import QueryBuilder
-from gis.advanced import QuerySettings, QuerySetting
+from gidown.query import QueryBuilder
+from gidown.advanced import QuerySettings, QuerySetting
 
 
 class GoogleSearchImage:
@@ -63,17 +63,21 @@ class GoogleSearchImage:
     def __str__(self):
         return "Downloadable {} at {}".format(self.type, self.url)
 
-    def download(self, download_all=False) -> None:
+    def download(self, download_all=False, check_ext=True) -> None:
         """
         Download the image and store raw bytes into **self.image**.
         Image type (extension) is automatically detected from the raw bytes if possible (**type**).
 
+        :param check_ext: Checks if extensions is correct. Raises ValueError if extension cannot be determined from image.
         :param download_all: Also download thumbnail and store it in **self.thumbnail**.
         """
+
         self.image = requests.get(self.url).content
         if download_all:
             self.download_thumbnail()
         ext = what(None, self.image)
+        if check_ext and ext is None:
+            raise ValueError("Unknown file format.")
         self.type = ext if ext is not None else self.type
 
     def download_thumbnail(self) -> None:
@@ -160,4 +164,5 @@ def image_query(query: str or QueryBuilder, *restrictions: QuerySetting, autocor
     soup = BeautifulSoup(html, 'html.parser')
     divs = soup.find_all("div", {"class": "rg_meta"})
 
-    return list(set(GoogleSearchImage(json.loads(div.text)) for div in divs))
+    data = [json.loads(div.text) for div in divs]
+    return list(set(GoogleSearchImage(img_data) for img_data in data))
