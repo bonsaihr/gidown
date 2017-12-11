@@ -19,7 +19,7 @@ pip install -r requirements.txt
 To download 5 images of cats and save them, you can run:
 
 ```python
-from gis import image_query
+from gidown import image_query
 
 images = image_query("cat")
 for i, image in enumerate(images[:5]):
@@ -49,21 +49,21 @@ done previously with `image.download`.
 
 Google offers a way to filter images by 
 
-- size          -   `gis.advanced.Size`
-- color         -   `gis.advanced.Color`
-- type          -   `gis.advanced.Type`
-- upload time   -   `gis.advanced.Time`
-- usage rights  -   `gis.advanced.UsageRights`
-- format        -   `gis.advanced.FileFormat`
+- size          -   `gidown.advanced.Size`
+- color         -   `gidown.advanced.Color`
+- type          -   `gidown.advanced.Type`
+- upload time   -   `gidown.advanced.Time`
+- usage rights  -   `gidown.advanced.UsageRights`
+- format        -   `gidown.advanced.FileFormat`
 
-and sort them by relevance or upload time (`gis.advanced.Sorting`).
+and sort them by relevance or upload time (`gidown.advanced.Sorting`).
  
 To get **large**, **JPG** images that are **mostly red**
 our previous search can be modified:
 
 ```python
-from gis import image_query
-from gis.advanced import Size, FileFormat, Color
+from gidown import image_query
+from gidown.advanced import Size, FileFormat, Color
 
 images = image_query("cat", Size.LARGE, FileFormat.JPG, Color.RED)
 ```
@@ -81,15 +81,15 @@ These options are also available via the `gis.QueryBuilder` object.
 To get large motivational images of cats or dogs:
 
 ```python
-from gis import image_query
-from gis.advanced import Size
+from gidown import image_query
+from gidown.advanced import Size
 
 # method 1
-from gis.query import any_of, all_of
+from gidown.query import any_of, all_of
 images = image_query(all_of("motivational", any_of("cat", "dog")), Size.LARGE)
 
 # method 2
-from gis import QueryBuilder
+from gidown import QueryBuilder
 q = QueryBuilder().add("motivational").add_choice("cat", "dog")
 images = image_query(q, Size.LARGE)
 ```
