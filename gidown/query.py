@@ -65,24 +65,25 @@ class QueryBuilder:
     Class for building queries similar to StringBuilder in Java. 
     
     Calling any function defined in :class:`str` on this class returns a string.
-    
+
+    >>> from gidown.query import QueryBuilder
     >>> q = QueryBuilder("text    ")
     >>> q.strip()
-    "text"
+    'text'
     
     The query: *dog OR cat eats "ice cream" site:example.com* can be generated with:
-    
+    >>> from gidown.query import all_of, any_of, phrase, on_site
     >>> all_of(any_of("dog", "cat"), "eats", phrase("ice cream"), on_site("example.com"))
     
     or with:
-    
+    >>> from gidown.query import QueryBuilder
     >>> QueryBuilder().add_choice("dog", "cat").add("eats").add_phrase("ice cream").add_site_restriction("example.com")
        
     """
 
     def __init__(self, initial_query=""):
         self._query = StringIO()
-        self.add(str(initial_query))
+        print(initial_query.strip(), sep=" ", end=" ", file=self._query)
 
     def add(self, *words) -> "QueryBuilder":
         """
@@ -93,6 +94,7 @@ class QueryBuilder:
         :param words: Desired words
         :return: self
         """
+
         print(all_of(*words), sep=" ", end=" ", file=self._query)
         return self
 
@@ -100,7 +102,7 @@ class QueryBuilder:
         """
         Add a specific phrase to the query.
         
-        Wrapper around :function:`.gis.query.phrase`.
+        Wrapper around `.gis.query.phrase`.
 
         :param term: Desired phrase
         :return: self
