@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gidown.advanced &mdash; GiDown 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="GiDown 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> GiDown
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Welcome to GiDown’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/gidown.advanced.html">gidown.advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/gidown.query.html">gidown.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/gidown.search.html">gidown.search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GiDown</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>gidown.advanced</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gidown.advanced</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">gidown.advanced</span>
+<span class="sd">~~~~~~~~~~~~~~~</span>
+<span class="sd">This module contains advanced image search options.</span>
+
+<span class="sd">:license: Apache2, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<div class="viewcode-block" id="QuerySetting"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.QuerySetting">[docs]</a><span class="k">class</span> <span class="nc">QuerySetting</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    General class to represent a single advanced search option. </span>
+<span class="sd">    Generally shouldn&#39;t be used outside the scope of this file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setting_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;       </span>
+<span class="sd">        General class to represent a single advanced search option. </span>
+<span class="sd">        </span>
+<span class="sd">        :param setting_str: String as it appears in tbs argument of google image search URL. Format: &quot;key&quot;:&quot;value&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">setting_str</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^.+:.+$&quot;</span><span class="p">,</span> <span class="n">setting_str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Setting string must be in the format &lt;key&gt;:&lt;value&gt;, </span><span class="si">{}</span><span class="s2"> was given&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">setting_str</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setting</span> <span class="o">=</span> <span class="n">setting_str</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setting</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QuerySetting.urlencode"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.QuerySetting.urlencode">[docs]</a>    <span class="k">def</span> <span class="nf">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Encode setting to match the format in tbs argument of google image search URL.</span>
+<span class="sd">        Simply returns the setting_str as it was given.</span>
+<span class="sd">        </span>
+<span class="sd">        :return: Setting encoded to match the format in tbs argument of google image search URL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setting</span></div>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">QuerySettings</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">other</span> <span class="o">+</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">QuerySettings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="QuerySettings"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.QuerySettings">[docs]</a><span class="k">class</span> <span class="nc">QuerySettings</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    General class to represent multiple advanced search options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">settings</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="n">QuerySetting</span> <span class="ow">or</span> <span class="s2">&quot;QuerySettings&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class to represent multiple advanced search options.</span>
+<span class="sd">        </span>
+<span class="sd">        :param settings: Variable amount of QuerySetting, QuerySettings objects or strings.  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="o">*</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot; and &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">setting</span><span class="p">)</span> <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QuerySettings.urlencode"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.QuerySettings.urlencode">[docs]</a>    <span class="k">def</span> <span class="nf">urlencode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Encode settings to match the format in **tbs** argument of google image search URL.</span>
+
+<span class="sd">        :return: Setting encoded to match the format in tbs argument of google image search URL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">urlencode</span><span class="p">()</span> <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">QuerySettings</span><span class="p">()</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">_settings</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">QuerySetting</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">QuerySettings</span><span class="p">()</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span><span class="p">[:]</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">_settings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="Size"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Size">[docs]</a><span class="k">class</span> <span class="nc">Size</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **image size** restrictions that can be used in advanced search options. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This class was not meant to be instanced.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Any size, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">LARGE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:l&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to large images&quot;&quot;&quot;</span>
+    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:m&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to medium images.&quot;&quot;&quot;</span>
+    <span class="n">ICON</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:i&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to icons.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Size.exactly"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Size.exactly">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">exactly</span><span class="p">(</span><span class="n">w</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QuerySetting</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrict search to images of exact size.</span>
+
+<span class="sd">        :param w: Required image width</span>
+<span class="sd">        :param h: Required image height</span>
+<span class="sd">        :return: QuerySetting representing desired restriction</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:ex,iszw:</span><span class="si">{}</span><span class="s2">,iszh:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Size.LargerThen"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Size.LargerThen">[docs]</a>    <span class="k">class</span> <span class="nc">LargerThen</span><span class="p">:</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Collection of **larger-then image size** restrictions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;This subclass was not meant to be instanced.&quot;&quot;&quot;</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+        <span class="n">S_400x300</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:qsvga&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to QSVGA (400x300) images.&quot;&quot;&quot;</span>
+        <span class="n">S_640x480</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:vga&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to VGA (640x480) images.&quot;&quot;&quot;</span>
+        <span class="n">S_800x600</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:svg&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to SVG (800x600) images.&quot;&quot;&quot;</span>
+        <span class="n">S_1024x768</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:xga&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to XGA (1024x768) images.&quot;&quot;&quot;</span>
+
+        <span class="n">QSVGA</span> <span class="o">=</span> <span class="n">S_400x300</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to QSVGA (400x300) images.&quot;&quot;&quot;</span>
+        <span class="n">VGA</span> <span class="o">=</span> <span class="n">S_640x480</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to VGA (640x480) images.&quot;&quot;&quot;</span>
+        <span class="n">SVG</span> <span class="o">=</span> <span class="n">S_800x600</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to SVG (800x600) images.&quot;&quot;&quot;</span>
+        <span class="n">XGA</span> <span class="o">=</span> <span class="n">S_1024x768</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to XGA (1024x768) images.&quot;&quot;&quot;</span>
+
+        <span class="n">MP_2</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:2mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 2MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_4</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:4mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 4MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_6</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:6mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 6MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_8</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:8mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 8MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_10</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:10mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 10MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_12</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:12mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 12MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_15</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:15mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 15MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_20</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:20mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 20MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_40</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:40mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 40MP images.&quot;&quot;&quot;</span>
+        <span class="n">MP_70</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;isz:lt,islt:70mp&quot;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Restrict search to 70MP images.&quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="Color"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Color">[docs]</a><span class="k">class</span> <span class="nc">Color</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **dominant image color** restrictions that can be used in advanced search options. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;No color restrictions, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">FULL</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:color&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to full color images.&quot;&quot;&quot;</span>
+    <span class="n">GRAY_SCALE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:gray&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to black and white images.&quot;&quot;&quot;</span>
+    <span class="n">TRANSPARENT</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:trans&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to partially transparent images.&quot;&quot;&quot;</span>
+
+    <span class="n">RED</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:red&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly red images.&quot;&quot;&quot;</span>
+    <span class="n">ORANGE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:orange&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly orange images.&quot;&quot;&quot;</span>
+    <span class="n">YELLOW</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:yellow&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly yellow images.&quot;&quot;&quot;</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:green&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly green images.&quot;&quot;&quot;</span>
+    <span class="n">TEAL</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:teal&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly teal images.&quot;&quot;&quot;</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:blue&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly blue images.&quot;&quot;&quot;</span>
+    <span class="n">PURPLE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:purple&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly purple images.&quot;&quot;&quot;</span>
+    <span class="n">PINK</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:pink&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly pink images.&quot;&quot;&quot;</span>
+    <span class="n">WHITE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:white&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly white images.&quot;&quot;&quot;</span>
+    <span class="n">GRAY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:gray&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly gray images.&quot;&quot;&quot;</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:black&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly black images.&quot;&quot;&quot;</span>
+    <span class="n">BROWN</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ic:specific,isc:brown&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to dominantly brown images.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Type"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Type">[docs]</a><span class="k">class</span> <span class="nc">Type</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **image type** restrictions that can be used in advanced search options. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;No type restrictions, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">FACE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;itp:face&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images of faces.&quot;&quot;&quot;</span>
+    <span class="n">PHOTO</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;itp:photo&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to photos.&quot;&quot;&quot;</span>
+    <span class="n">CLIP_ART</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;itp:clipart&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to clipart.&quot;&quot;&quot;</span>
+    <span class="n">LINE_DRAWING</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;itp:lineart&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to lineart.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Time"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Time">[docs]</a><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **image upload time** restrictions that can be used in advanced search options. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;No time restrictions, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">PAST_SECOND</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;qdr:d&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that were uploaded in the past second.&quot;&quot;&quot;</span>
+    <span class="n">PAST_24H</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;qdr:d&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that were uploaded in the past 24 hours.&quot;&quot;&quot;</span>
+    <span class="n">PAST_WEEK</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;qdr:w&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that were uploaded in the past week.&quot;&quot;&quot;</span>
+
+    <span class="n">_valid_measures</span> <span class="o">=</span> <span class="s2">&quot;nhdwm&quot;</span>
+
+<div class="viewcode-block" id="Time.past"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Time.past">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">past</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrict search to images that were uploaded in the past &lt;amount&gt; &lt;unit&gt;.</span>
+<span class="sd">        </span>
+<span class="sd">        To get results from the past 10 weeks you would add the restriction:</span>
+<span class="sd">        &gt;&gt;&gt; from gidown.advanced import Time</span>
+<span class="sd">        &gt;&gt;&gt; Time.past(10, &quot;w&quot;)</span>
+<span class="sd">        tbs=qdr:10w</span>
+<span class="sd">        </span>
+<span class="sd">        Allowed units of time:</span>
+<span class="sd">        </span>
+<span class="sd">        * n - minute</span>
+<span class="sd">        * h - hour</span>
+<span class="sd">        * d - day</span>
+<span class="sd">        * w - week</span>
+<span class="sd">        * m - month</span>
+
+<span class="sd">        :param amount: Amount of time to look into the past, measured &lt;unit&gt;.</span>
+<span class="sd">        :param unit: One of the allowed units of time. Defaults to hour (h).</span>
+<span class="sd">        :return: QuerySetting representing desired restriction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">unit</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Time</span><span class="o">.</span><span class="n">_valid_measures</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown measure </span><span class="si">{}</span><span class="s2">, must be one of: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">Time</span><span class="o">.</span><span class="n">_valid_measures</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;tbs=qdr:</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">amount</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">amount</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Time.range"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Time.range">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">range</span><span class="p">(</span><span class="n">date_from</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">date_to</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span><span class="n">QuerySetting</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates generic time restrictions. Include images uploaded from &lt;date_from&gt; to &lt;date_to&gt;.</span>
+
+<span class="sd">        :param date_from: Starting date, inclusive.</span>
+<span class="sd">        :param date_to: Ending date, inclusive.</span>
+<span class="sd">        :return: QuerySetting representing desired restriction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;cdr=1,cd_min=</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">,cd_max=</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">date_from</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">date_from</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date_from</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">date_to</span><span class="o">.</span><span class="n">day</span><span class="p">,</span> <span class="n">date_to</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">date_to</span><span class="o">.</span><span class="n">year</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="FileFormat"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.FileFormat">[docs]</a><span class="k">class</span> <span class="nc">FileFormat</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **file format** restrictions that can be used in advanced search options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;No format restrictions, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">JPG</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:jpg&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to JPG files.&quot;&quot;&quot;</span>
+    <span class="n">GIF</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:gif&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to GIF files.&quot;&quot;&quot;</span>
+    <span class="n">PNG</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:png&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to PNG files.&quot;&quot;&quot;</span>
+    <span class="n">BMP</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:mbp&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to BMP files.&quot;&quot;&quot;</span>
+    <span class="n">SVG</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:svg&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to SVG files.&quot;&quot;&quot;</span>
+    <span class="n">WEBP</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:webp&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to WEBP files.&quot;&quot;&quot;</span>
+    <span class="n">ICO</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;ift:ico&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to ICO files.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="AspectRatio"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.AspectRatio">[docs]</a><span class="k">class</span> <span class="nc">AspectRatio</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **aspect ratio** restrictions that can be used in advanced search options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;No aspect ratio restrictions, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">TALL</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;iar:t&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to tall images. (width &lt; height)&quot;&quot;&quot;</span>
+    <span class="n">SQUARE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;iar:s&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to square images. (width == height)&quot;&quot;&quot;</span>
+    <span class="n">WIDE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;iar:w&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to wide images. (width &gt; height)&quot;&quot;&quot;</span>
+    <span class="n">PANORAMIC</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;iar:xw&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to panoramic images. (width &gt;&gt; height)&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="UsageRights"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.UsageRights">[docs]</a><span class="k">class</span> <span class="nc">UsageRights</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **Usage rights** restrictions that can be used in advanced search options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+
+    <span class="n">ANY</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;No usage rights restriction, doesn&#39;t effect search results.&quot;&quot;&quot;</span>
+    <span class="n">REUSE_WITH_MODIFICATION</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;sur:fc&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that can be used commercially with modification&quot;&quot;&quot;</span>
+    <span class="n">REUSE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;sur:fmc&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that can be used commercially without modification&quot;&quot;&quot;</span>
+    <span class="n">NONCOMMERCIAL_REUSE_WITH_MODIFICATION</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;sur:fm&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that can be used non-commercially with modification&quot;&quot;&quot;</span>
+    <span class="n">NONCOMMERCIAL_REUSE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;sur:f&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Restrict search to images that can be used non-commercially without modification&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Sorting"><a class="viewcode-back" href="../../api/gidown.advanced.html#gidown.advanced.Sorting">[docs]</a><span class="k">class</span> <span class="nc">Sorting</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collection of **sorting** options that can be used in advanced search options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">{}</span><span class="s2"> class is not meant to be instanced.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+
+    <span class="n">BY_DATE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;sbd:1&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Sort results by date.&quot;&quot;&quot;</span>
+    <span class="n">BY_RELEVANCE</span> <span class="o">=</span> <span class="n">QuerySetting</span><span class="p">(</span><span class="s2">&quot;sbd:0&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Sort results by relevance.&quot;&quot;&quot;</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, BonsAI d.o.o.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

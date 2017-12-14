@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gidown.search &mdash; GiDown 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="GiDown 0.1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> GiDown
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Welcome to GiDown’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/gidown.advanced.html">gidown.advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/gidown.query.html">gidown.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/gidown.search.html">gidown.search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">GiDown</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>gidown.search</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gidown.search</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">gidown.search</span>
+<span class="sd">~~~~~~~~~~~~~</span>
+<span class="sd">This module implements functions and classes for acquiring images from google image search.</span>
+
+<span class="sd">:license: Apache2, see LICENSE for more details.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">imghdr</span> <span class="k">import</span> <span class="n">what</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote_plus</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="kn">from</span> <span class="nn">gidown.query</span> <span class="k">import</span> <span class="n">QueryBuilder</span>
+<span class="kn">from</span> <span class="nn">gidown.advanced</span> <span class="k">import</span> <span class="n">QuerySettings</span><span class="p">,</span> <span class="n">QuerySetting</span>
+
+
+<div class="viewcode-block" id="GoogleSearchImage"><a class="viewcode-back" href="../../api/gidown.search.html#gidown.search.GoogleSearchImage">[docs]</a><span class="k">class</span> <span class="nc">GoogleSearchImage</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class used to store information about images from google image search. </span>
+<span class="sd">    Two **GoogleSearchImage** are considered the same if they have the same image URL.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">google_json_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :param google_json_dict: Dictionary as found in &lt;div&gt; for each image on google image search pages  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;ou&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tb_url</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;tu&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">src_url</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;ru&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">src_domain</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;isu&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;ow&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;oh&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;ity&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tb_width</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;tw&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tb_height</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;th&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tb_type</span> <span class="o">=</span> <span class="n">google_json_dict</span><span class="p">[</span><span class="s2">&quot;ity&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;image_url&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">image_url</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Downloadable </span><span class="si">{}</span><span class="s2"> at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GoogleSearchImage.download"><a class="viewcode-back" href="../../api/gidown.search.html#gidown.search.GoogleSearchImage.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">download_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">check_ext</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download the image and store raw bytes into **self.image**.</span>
+<span class="sd">        Image type (extension) is automatically detected from the raw bytes if possible (**type**).</span>
+
+<span class="sd">        :param check_ext: Checks if extensions is correct. Raises ValueError if extension cannot be determined from image.</span>
+<span class="sd">        :param download_all: Also download thumbnail and store it in **self.thumbnail**.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+        <span class="k">if</span> <span class="n">download_all</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">download_thumbnail</span><span class="p">()</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check_ext</span> <span class="ow">and</span> <span class="n">ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown file format.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">ext</span> <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span></div>
+
+<div class="viewcode-block" id="GoogleSearchImage.download_thumbnail"><a class="viewcode-back" href="../../api/gidown.search.html#gidown.search.GoogleSearchImage.download_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">download_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Download the thumbnail and store raw bytes into **self.thumbnail**.</span>
+<span class="sd">        Image type (extension) is automatically detected from the raw bytes if possible (**thumbnail_type**).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tb_url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">what</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tb_type</span> <span class="o">=</span> <span class="n">ext</span> <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tb_type</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="n">img_data</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+            <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GoogleSearchImage.save"><a class="viewcode-back" href="../../api/gidown.search.html#gidown.search.GoogleSearchImage.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">auto_ext</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save image to filesystem. If the image was not downloaded using **download** it is done now.</span>
+<span class="sd">               </span>
+<span class="sd">        Image type (extension) is automatically detected from the raw bytes if possible, otherwise the type is</span>
+<span class="sd">        determined from the google image search dictionary.</span>
+
+<span class="sd">        :param filename: Path to store the image to.</span>
+<span class="sd">        :param auto_ext: Automatically add the file extension.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">auto_ext</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GoogleSearchImage.save_thumbnail"><a class="viewcode-back" href="../../api/gidown.search.html#gidown.search.GoogleSearchImage.save_thumbnail">[docs]</a>    <span class="k">def</span> <span class="nf">save_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">auto_ext</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save thumbnail to filesystem. If the thumbnail was not downloaded using **download_thumbnail** it is done now.</span>
+<span class="sd">               </span>
+<span class="sd">        Image type (extension) is automatically detected from the raw bytes if possible, otherwise the type is</span>
+<span class="sd">        determined from the google image search dictionary.</span>
+
+<span class="sd">        :param filename: Path to store the thumbnail to.</span>
+<span class="sd">        :param auto_ext: Automatically add the file extension.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">download_thumbnail</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">auto_ext</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tb_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div></div>
+
+
+<span class="n">_USER_AGENT</span> <span class="o">=</span> <span class="s2">&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36&quot;</span>
+<span class="n">_URL</span> <span class="o">=</span> <span class="s2">&quot;https://www.google.hr/search&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_generate_url</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">autocorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tbm&quot;</span><span class="p">:</span> <span class="s2">&quot;isch&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;tbs&quot;</span><span class="p">:</span> <span class="n">QuerySettings</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(),</span>
+         <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="n">quote_plus</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span>
+         <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;lnms&quot;</span><span class="p">}</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">autocorrect</span><span class="p">:</span>
+        <span class="n">q</span><span class="p">[</span><span class="s2">&quot;nfpr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">?</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_URL</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">q</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+
+<span class="k">def</span> <span class="nf">_fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="n">_USER_AGENT</span><span class="p">})</span>
+    <span class="n">html_doc</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">text</span>
+    <span class="k">return</span> <span class="n">html_doc</span>
+
+
+<div class="viewcode-block" id="image_query"><a class="viewcode-back" href="../../api/gidown.search.html#gidown.search.image_query">[docs]</a><span class="k">def</span> <span class="nf">image_query</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span> <span class="ow">or</span> <span class="n">QueryBuilder</span><span class="p">,</span> <span class="o">*</span><span class="n">restrictions</span><span class="p">:</span> <span class="n">QuerySetting</span><span class="p">,</span> <span class="n">autocorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">GoogleSearchImage</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Query google for images that satisfy all the restrictions.</span>
+
+<span class="sd">    :param query: Query string, supports all advanced google search options.(see gis.query for wrappers around often used options) </span>
+<span class="sd">    :param restrictions: Variable amount of advanced search options. (see gis.advanced)</span>
+<span class="sd">    :param autocorrect: Auto-correct queries that have a high likelihood of a misspell (e.q. &quot;color grenn&quot;)</span>
+<span class="sd">    :return: List of unique GoogleSearchImage objects that can be downloaded and saved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">_generate_url</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">restrictions</span><span class="p">,</span> <span class="n">autocorrect</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">_fetch_html</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+    <span class="n">divs</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;rg_meta&quot;</span><span class="p">})</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">divs</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">GoogleSearchImage</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span> <span class="k">for</span> <span class="n">img_data</span> <span class="ow">in</span> <span class="n">data</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, BonsAI d.o.o.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

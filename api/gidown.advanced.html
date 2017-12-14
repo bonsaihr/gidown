@@ -1,0 +1,832 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gidown.advanced &mdash; GiDown 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="GiDown 0.1.0 documentation" href="../index.html"/>
+        <link rel="next" title="gidown.query" href="gidown.query.html"/>
+        <link rel="prev" title="Welcome to GiDown’s documentation!" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GiDown
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to GiDown’s documentation!</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gidown.advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gidown.query.html">gidown.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gidown.search.html">gidown.search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GiDown</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gidown.advanced</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/gidown.advanced.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-gidown.advanced"></span><div class="section" id="gidown-advanced">
+<h1>gidown.advanced<a class="headerlink" href="#gidown-advanced" title="Permalink to this headline">¶</a></h1>
+<p>This module contains advanced image search options.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">license:</th><td class="field-body">Apache2, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="gidown.advanced.AspectRatio">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">AspectRatio</code><a class="reference internal" href="../_modules/gidown/advanced.html#AspectRatio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.AspectRatio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>aspect ratio</strong> restrictions that can be used in advanced search options.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.AspectRatio.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.AspectRatio.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>No aspect ratio restrictions, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.AspectRatio.PANORAMIC">
+<code class="descname">PANORAMIC</code><em class="property"> = iar:xw</em><a class="headerlink" href="#gidown.advanced.AspectRatio.PANORAMIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to panoramic images. (width &gt;&gt; height)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.AspectRatio.SQUARE">
+<code class="descname">SQUARE</code><em class="property"> = iar:s</em><a class="headerlink" href="#gidown.advanced.AspectRatio.SQUARE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to square images. (width == height)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.AspectRatio.TALL">
+<code class="descname">TALL</code><em class="property"> = iar:t</em><a class="headerlink" href="#gidown.advanced.AspectRatio.TALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to tall images. (width &lt; height)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.AspectRatio.WIDE">
+<code class="descname">WIDE</code><em class="property"> = iar:w</em><a class="headerlink" href="#gidown.advanced.AspectRatio.WIDE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to wide images. (width &gt; height)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.Color">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">Color</code><a class="reference internal" href="../_modules/gidown/advanced.html#Color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>dominant image color</strong> restrictions that can be used in advanced search options.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.Color.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.Color.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>No color restrictions, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.BLACK">
+<code class="descname">BLACK</code><em class="property"> = ic:specific,isc:black</em><a class="headerlink" href="#gidown.advanced.Color.BLACK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly black images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.BLUE">
+<code class="descname">BLUE</code><em class="property"> = ic:specific,isc:blue</em><a class="headerlink" href="#gidown.advanced.Color.BLUE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly blue images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.BROWN">
+<code class="descname">BROWN</code><em class="property"> = ic:specific,isc:brown</em><a class="headerlink" href="#gidown.advanced.Color.BROWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly brown images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.FULL">
+<code class="descname">FULL</code><em class="property"> = ic:color</em><a class="headerlink" href="#gidown.advanced.Color.FULL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to full color images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.GRAY">
+<code class="descname">GRAY</code><em class="property"> = ic:specific,isc:gray</em><a class="headerlink" href="#gidown.advanced.Color.GRAY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly gray images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.GRAY_SCALE">
+<code class="descname">GRAY_SCALE</code><em class="property"> = ic:gray</em><a class="headerlink" href="#gidown.advanced.Color.GRAY_SCALE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to black and white images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.GREEN">
+<code class="descname">GREEN</code><em class="property"> = ic:specific,isc:green</em><a class="headerlink" href="#gidown.advanced.Color.GREEN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly green images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.ORANGE">
+<code class="descname">ORANGE</code><em class="property"> = ic:specific,isc:orange</em><a class="headerlink" href="#gidown.advanced.Color.ORANGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly orange images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.PINK">
+<code class="descname">PINK</code><em class="property"> = ic:specific,isc:pink</em><a class="headerlink" href="#gidown.advanced.Color.PINK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly pink images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.PURPLE">
+<code class="descname">PURPLE</code><em class="property"> = ic:specific,isc:purple</em><a class="headerlink" href="#gidown.advanced.Color.PURPLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly purple images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.RED">
+<code class="descname">RED</code><em class="property"> = ic:specific,isc:red</em><a class="headerlink" href="#gidown.advanced.Color.RED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly red images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.TEAL">
+<code class="descname">TEAL</code><em class="property"> = ic:specific,isc:teal</em><a class="headerlink" href="#gidown.advanced.Color.TEAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly teal images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.TRANSPARENT">
+<code class="descname">TRANSPARENT</code><em class="property"> = ic:trans</em><a class="headerlink" href="#gidown.advanced.Color.TRANSPARENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to partially transparent images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.WHITE">
+<code class="descname">WHITE</code><em class="property"> = ic:specific,isc:white</em><a class="headerlink" href="#gidown.advanced.Color.WHITE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly white images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Color.YELLOW">
+<code class="descname">YELLOW</code><em class="property"> = ic:specific,isc:yellow</em><a class="headerlink" href="#gidown.advanced.Color.YELLOW" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to dominantly yellow images.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.FileFormat">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">FileFormat</code><a class="reference internal" href="../_modules/gidown/advanced.html#FileFormat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.FileFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>file format</strong> restrictions that can be used in advanced search options.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.FileFormat.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>No format restrictions, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.BMP">
+<code class="descname">BMP</code><em class="property"> = ift:mbp</em><a class="headerlink" href="#gidown.advanced.FileFormat.BMP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to BMP files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.GIF">
+<code class="descname">GIF</code><em class="property"> = ift:gif</em><a class="headerlink" href="#gidown.advanced.FileFormat.GIF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to GIF files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.ICO">
+<code class="descname">ICO</code><em class="property"> = ift:ico</em><a class="headerlink" href="#gidown.advanced.FileFormat.ICO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to ICO files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.JPG">
+<code class="descname">JPG</code><em class="property"> = ift:jpg</em><a class="headerlink" href="#gidown.advanced.FileFormat.JPG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to JPG files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.PNG">
+<code class="descname">PNG</code><em class="property"> = ift:png</em><a class="headerlink" href="#gidown.advanced.FileFormat.PNG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to PNG files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.SVG">
+<code class="descname">SVG</code><em class="property"> = ift:svg</em><a class="headerlink" href="#gidown.advanced.FileFormat.SVG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to SVG files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.FileFormat.WEBP">
+<code class="descname">WEBP</code><em class="property"> = ift:webp</em><a class="headerlink" href="#gidown.advanced.FileFormat.WEBP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to WEBP files.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.QuerySetting">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">QuerySetting</code><span class="sig-paren">(</span><em>setting_str: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gidown/advanced.html#QuerySetting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.QuerySetting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>General class to represent a single advanced search option. 
+Generally shouldn’t be used outside the scope of this file.</p>
+<dl class="method">
+<dt id="gidown.advanced.QuerySetting.urlencode">
+<code class="descname">urlencode</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/advanced.html#QuerySetting.urlencode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.QuerySetting.urlencode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode setting to match the format in tbs argument of google image search URL.
+Simply returns the setting_str as it was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Setting encoded to match the format in tbs argument of google image search URL</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.QuerySettings">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">QuerySettings</code><span class="sig-paren">(</span><em>*settings: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gidown/advanced.html#QuerySettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.QuerySettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>General class to represent multiple advanced search options.</p>
+<dl class="method">
+<dt id="gidown.advanced.QuerySettings.urlencode">
+<code class="descname">urlencode</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/advanced.html#QuerySettings.urlencode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.QuerySettings.urlencode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode settings to match the format in <strong>tbs</strong> argument of google image search URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Setting encoded to match the format in tbs argument of google image search URL</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.Size">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">Size</code><a class="reference internal" href="../_modules/gidown/advanced.html#Size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>image size</strong> restrictions that can be used in advanced search options.</p>
+<dl class="class">
+<dt id="gidown.advanced.Size.LargerThen">
+<em class="property">class </em><code class="descname">LargerThen</code><a class="reference internal" href="../_modules/gidown/advanced.html#Size.LargerThen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Size.LargerThen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>larger-then image size</strong> restrictions.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_10">
+<code class="descname">MP_10</code><em class="property"> = isz:lt,islt:10mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_10" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 10MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_12">
+<code class="descname">MP_12</code><em class="property"> = isz:lt,islt:12mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_12" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 12MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_15">
+<code class="descname">MP_15</code><em class="property"> = isz:lt,islt:15mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_15" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 15MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_2">
+<code class="descname">MP_2</code><em class="property"> = isz:lt,islt:2mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 2MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_20">
+<code class="descname">MP_20</code><em class="property"> = isz:lt,islt:20mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_20" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 20MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_4">
+<code class="descname">MP_4</code><em class="property"> = isz:lt,islt:4mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 4MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_40">
+<code class="descname">MP_40</code><em class="property"> = isz:lt,islt:40mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_40" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 40MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_6">
+<code class="descname">MP_6</code><em class="property"> = isz:lt,islt:6mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_6" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 6MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_70">
+<code class="descname">MP_70</code><em class="property"> = isz:lt,islt:70mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_70" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 70MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.MP_8">
+<code class="descname">MP_8</code><em class="property"> = isz:lt,islt:8mp</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.MP_8" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to 8MP images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.QSVGA">
+<code class="descname">QSVGA</code><em class="property"> = isz:lt,islt:qsvga</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.QSVGA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to QSVGA (400x300) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.SVG">
+<code class="descname">SVG</code><em class="property"> = isz:lt,islt:svg</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.SVG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to SVG (800x600) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.S_1024x768">
+<code class="descname">S_1024x768</code><em class="property"> = isz:lt,islt:xga</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.S_1024x768" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to XGA (1024x768) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.S_400x300">
+<code class="descname">S_400x300</code><em class="property"> = isz:lt,islt:qsvga</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.S_400x300" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to QSVGA (400x300) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.S_640x480">
+<code class="descname">S_640x480</code><em class="property"> = isz:lt,islt:vga</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.S_640x480" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to VGA (640x480) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.S_800x600">
+<code class="descname">S_800x600</code><em class="property"> = isz:lt,islt:svg</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.S_800x600" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to SVG (800x600) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.VGA">
+<code class="descname">VGA</code><em class="property"> = isz:lt,islt:vga</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.VGA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to VGA (640x480) images.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LargerThen.XGA">
+<code class="descname">XGA</code><em class="property"> = isz:lt,islt:xga</em><a class="headerlink" href="#gidown.advanced.Size.LargerThen.XGA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to XGA (1024x768) images.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gidown.advanced.Size.exactly">
+<em class="property">static </em><code class="descname">exactly</code><span class="sig-paren">(</span><em>w: int</em>, <em>h: int</em><span class="sig-paren">)</span> &#x2192; gidown.advanced.QuerySetting<a class="reference internal" href="../_modules/gidown/advanced.html#Size.exactly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Size.exactly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images of exact size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>w</strong> – Required image width</li>
+<li><strong>h</strong> – Required image height</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">QuerySetting representing desired restriction</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.Size.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Any size, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.ICON">
+<code class="descname">ICON</code><em class="property"> = isz:i</em><a class="headerlink" href="#gidown.advanced.Size.ICON" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to icons.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.LARGE">
+<code class="descname">LARGE</code><em class="property"> = isz:l</em><a class="headerlink" href="#gidown.advanced.Size.LARGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to large images</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Size.MEDIUM">
+<code class="descname">MEDIUM</code><em class="property"> = isz:m</em><a class="headerlink" href="#gidown.advanced.Size.MEDIUM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to medium images.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.Sorting">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">Sorting</code><a class="reference internal" href="../_modules/gidown/advanced.html#Sorting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Sorting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>sorting</strong> options that can be used in advanced search options.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.Sorting.BY_DATE">
+<code class="descname">BY_DATE</code><em class="property"> = sbd:1</em><a class="headerlink" href="#gidown.advanced.Sorting.BY_DATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort results by date.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Sorting.BY_RELEVANCE">
+<code class="descname">BY_RELEVANCE</code><em class="property"> = sbd:0</em><a class="headerlink" href="#gidown.advanced.Sorting.BY_RELEVANCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort results by relevance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.Time">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">Time</code><a class="reference internal" href="../_modules/gidown/advanced.html#Time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>image upload time</strong> restrictions that can be used in advanced search options.</p>
+<dl class="staticmethod">
+<dt id="gidown.advanced.Time.past">
+<em class="property">static </em><code class="descname">past</code><span class="sig-paren">(</span><em>amount: int</em>, <em>unit='h'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gidown/advanced.html#Time.past"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Time.past" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that were uploaded in the past &lt;amount&gt; &lt;unit&gt;.</p>
+<p>To get results from the past 10 weeks you would add the restriction:
+&gt;&gt;&gt; from gidown.advanced import Time
+&gt;&gt;&gt; Time.past(10, “w”)
+tbs=qdr:10w</p>
+<p>Allowed units of time:</p>
+<ul class="simple">
+<li>n - minute</li>
+<li>h - hour</li>
+<li>d - day</li>
+<li>w - week</li>
+<li>m - month</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>amount</strong> – Amount of time to look into the past, measured &lt;unit&gt;.</li>
+<li><strong>unit</strong> – One of the allowed units of time. Defaults to hour (h).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">QuerySetting representing desired restriction.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gidown.advanced.Time.range">
+<em class="property">static </em><code class="descname">range</code><span class="sig-paren">(</span><em>date_from: datetime.date</em>, <em>date_to: datetime.date</em><span class="sig-paren">)</span> &#x2192; gidown.advanced.QuerySetting<a class="reference internal" href="../_modules/gidown/advanced.html#Time.range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Time.range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates generic time restrictions. Include images uploaded from &lt;date_from&gt; to &lt;date_to&gt;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>date_from</strong> – Starting date, inclusive.</li>
+<li><strong>date_to</strong> – Ending date, inclusive.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">QuerySetting representing desired restriction.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Time.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.Time.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>No time restrictions, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Time.PAST_24H">
+<code class="descname">PAST_24H</code><em class="property"> = qdr:d</em><a class="headerlink" href="#gidown.advanced.Time.PAST_24H" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that were uploaded in the past 24 hours.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Time.PAST_SECOND">
+<code class="descname">PAST_SECOND</code><em class="property"> = qdr:d</em><a class="headerlink" href="#gidown.advanced.Time.PAST_SECOND" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that were uploaded in the past second.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Time.PAST_WEEK">
+<code class="descname">PAST_WEEK</code><em class="property"> = qdr:w</em><a class="headerlink" href="#gidown.advanced.Time.PAST_WEEK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that were uploaded in the past week.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.Type">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">Type</code><a class="reference internal" href="../_modules/gidown/advanced.html#Type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.Type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>image type</strong> restrictions that can be used in advanced search options.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.Type.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.Type.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>No type restrictions, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Type.CLIP_ART">
+<code class="descname">CLIP_ART</code><em class="property"> = itp:clipart</em><a class="headerlink" href="#gidown.advanced.Type.CLIP_ART" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to clipart.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Type.FACE">
+<code class="descname">FACE</code><em class="property"> = itp:face</em><a class="headerlink" href="#gidown.advanced.Type.FACE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images of faces.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Type.LINE_DRAWING">
+<code class="descname">LINE_DRAWING</code><em class="property"> = itp:lineart</em><a class="headerlink" href="#gidown.advanced.Type.LINE_DRAWING" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to lineart.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.Type.PHOTO">
+<code class="descname">PHOTO</code><em class="property"> = itp:photo</em><a class="headerlink" href="#gidown.advanced.Type.PHOTO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to photos.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gidown.advanced.UsageRights">
+<em class="property">class </em><code class="descclassname">gidown.advanced.</code><code class="descname">UsageRights</code><a class="reference internal" href="../_modules/gidown/advanced.html#UsageRights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.advanced.UsageRights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Collection of <strong>Usage rights</strong> restrictions that can be used in advanced search options.</p>
+<dl class="attribute">
+<dt id="gidown.advanced.UsageRights.ANY">
+<code class="descname">ANY</code><em class="property"> = </em><a class="headerlink" href="#gidown.advanced.UsageRights.ANY" title="Permalink to this definition">¶</a></dt>
+<dd><p>No usage rights restriction, doesn’t effect search results.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.UsageRights.NONCOMMERCIAL_REUSE">
+<code class="descname">NONCOMMERCIAL_REUSE</code><em class="property"> = sur:f</em><a class="headerlink" href="#gidown.advanced.UsageRights.NONCOMMERCIAL_REUSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that can be used non-commercially without modification</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.UsageRights.NONCOMMERCIAL_REUSE_WITH_MODIFICATION">
+<code class="descname">NONCOMMERCIAL_REUSE_WITH_MODIFICATION</code><em class="property"> = sur:fm</em><a class="headerlink" href="#gidown.advanced.UsageRights.NONCOMMERCIAL_REUSE_WITH_MODIFICATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that can be used non-commercially with modification</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.UsageRights.REUSE">
+<code class="descname">REUSE</code><em class="property"> = sur:fmc</em><a class="headerlink" href="#gidown.advanced.UsageRights.REUSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that can be used commercially without modification</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gidown.advanced.UsageRights.REUSE_WITH_MODIFICATION">
+<code class="descname">REUSE_WITH_MODIFICATION</code><em class="property"> = sur:fc</em><a class="headerlink" href="#gidown.advanced.UsageRights.REUSE_WITH_MODIFICATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to images that can be used commercially with modification</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gidown.query.html" class="btn btn-neutral float-right" title="gidown.query" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to GiDown’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, BonsAI d.o.o.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

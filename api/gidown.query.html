@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gidown.query &mdash; GiDown 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="GiDown 0.1.0 documentation" href="../index.html"/>
+        <link rel="next" title="gidown.search" href="gidown.search.html"/>
+        <link rel="prev" title="gidown.advanced" href="gidown.advanced.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> GiDown
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Welcome to GiDown’s documentation!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gidown.advanced.html">gidown.advanced</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">gidown.query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gidown.search.html">gidown.search</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GiDown</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>gidown.query</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/gidown.query.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-gidown.query"></span><div class="section" id="gidown-query">
+<h1>gidown.query<a class="headerlink" href="#gidown-query" title="Permalink to this headline">¶</a></h1>
+<p>This module implements advances query options such as site restriction and excluding words.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">license:</th><td class="field-body">Apache2, see LICENSE for more details.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="gidown.query.QueryBuilder">
+<em class="property">class </em><code class="descclassname">gidown.query.</code><code class="descname">QueryBuilder</code><span class="sig-paren">(</span><em>initial_query=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gidown/query.html#QueryBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.QueryBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for building queries similar to StringBuilder in Java.</p>
+<p>Calling any function defined in <a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">str</span></code></a> on this class returns a string.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gidown.query</span> <span class="k">import</span> <span class="n">QueryBuilder</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">QueryBuilder</span><span class="p">(</span><span class="s2">&quot;text    &quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="go">&#39;text&#39;</span>
+</pre></div>
+</div>
+<p>The query: <em>dog OR cat eats “ice cream” site:example.com</em> can be generated with:
+&gt;&gt;&gt; from gidown.query import all_of, any_of, phrase, on_site
+&gt;&gt;&gt; all_of(any_of(“dog”, “cat”), “eats”, phrase(“ice cream”), on_site(“example.com”))</p>
+<p>or with:
+&gt;&gt;&gt; from gidown.query import QueryBuilder
+&gt;&gt;&gt; QueryBuilder().add_choice(“dog”, “cat”).add(“eats”).add_phrase(“ice cream”).add_site_restriction(“example.com”)</p>
+<dl class="method">
+<dt id="gidown.query.QueryBuilder.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>*words</em><span class="sig-paren">)</span> &#x2192; gidown.query.QueryBuilder<a class="reference internal" href="../_modules/gidown/query.html#QueryBuilder.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.QueryBuilder.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add words to query.</p>
+<p>Wrapper around <cite>gis.query.all_of</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> – Desired words</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gidown.query.QueryBuilder.add_choice">
+<code class="descname">add_choice</code><span class="sig-paren">(</span><em>*words</em><span class="sig-paren">)</span> &#x2192; gidown.query.QueryBuilder<a class="reference internal" href="../_modules/gidown/query.html#QueryBuilder.add_choice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.QueryBuilder.add_choice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add words to query as <em>any of</em>.</p>
+<p>Wrapper around gis.query.any_of.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> – Desired words</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gidown.query.QueryBuilder.add_phrase">
+<code class="descname">add_phrase</code><span class="sig-paren">(</span><em>term</em><span class="sig-paren">)</span> &#x2192; gidown.query.QueryBuilder<a class="reference internal" href="../_modules/gidown/query.html#QueryBuilder.add_phrase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.QueryBuilder.add_phrase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a specific phrase to the query.</p>
+<p>Wrapper around <cite>.gis.query.phrase</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>term</strong> – Desired phrase</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gidown.query.QueryBuilder.add_site_restriction">
+<code class="descname">add_site_restriction</code><span class="sig-paren">(</span><em>domain</em>, <em>exclude=False</em><span class="sig-paren">)</span> &#x2192; gidown.query.QueryBuilder<a class="reference internal" href="../_modules/gidown/query.html#QueryBuilder.add_site_restriction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.QueryBuilder.add_site_restriction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to a specific domain.
+Can be repeated to restrict search on multiple sites.</p>
+<p>Wrapper around gis.query.on_site.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>domain</strong> – Domain name that is searched.</li>
+<li><strong>exclude</strong> – Exclude results from this site.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">self</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gidown.query.QueryBuilder.exclude">
+<code class="descname">exclude</code><span class="sig-paren">(</span><em>*words</em><span class="sig-paren">)</span> &#x2192; gidown.query.QueryBuilder<a class="reference internal" href="../_modules/gidown/query.html#QueryBuilder.exclude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.QueryBuilder.exclude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exclude results with undesired words.</p>
+<p>Wrapper around gis.query.none_of.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="gidown.query.all_of">
+<code class="descclassname">gidown.query.</code><code class="descname">all_of</code><span class="sig-paren">(</span><em>*words: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/query.html#all_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.all_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format words to query results containing all the desired words.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> – List of desired words</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String in the format google understands</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gidown.query.any_of">
+<code class="descclassname">gidown.query.</code><code class="descname">any_of</code><span class="sig-paren">(</span><em>*words: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/query.html#any_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.any_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format words to query results containing any the desired words.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> – List of desired words</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String in the format google understands</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gidown.query.none_of">
+<code class="descclassname">gidown.query.</code><code class="descname">none_of</code><span class="sig-paren">(</span><em>*words: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/query.html#none_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.none_of" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format words to query results containing none of the undesired words.
+This also works with the <strong>on_site</strong> restriction to exclude undesired domains.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> – List of undesired words</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String in the format google understands</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gidown.query.on_site">
+<code class="descclassname">gidown.query.</code><code class="descname">on_site</code><span class="sig-paren">(</span><em>domain: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/query.html#on_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.on_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restrict search to a specific domain.
+Can be repeated to restrict search on multiple sites.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>domain</strong> – Domain name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String in the format google understands</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="gidown.query.phrase">
+<code class="descclassname">gidown.query.</code><code class="descname">phrase</code><span class="sig-paren">(</span><em>term: str</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/gidown/query.html#phrase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#gidown.query.phrase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format words to query results containing the desired phrase.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>term</strong> – A phrase that appears in that exact form. (e.q. phrase “Chicago Bulls” vs. words “Chicago” “Bulls”)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">String in the format google understands</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gidown.search.html" class="btn btn-neutral float-right" title="gidown.search" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gidown.advanced.html" class="btn btn-neutral" title="gidown.advanced" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, BonsAI d.o.o.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

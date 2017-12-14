@@ -1,0 +1,4 @@
+.. automodule:: gidown.search
+    :members:
+    :undoc-members:
+    :show-inheritance:
