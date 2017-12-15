@@ -1,6 +1,6 @@
 """
 gidown.advanced
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 This module contains advanced image search options.
 
 :license: Apache2, see LICENSE for more details.
@@ -262,8 +262,9 @@ class Time:
         Restrict search to images that were uploaded in the past <amount> <unit>.
         
         To get results from the past 10 weeks you would add the restriction:
-        
-        >>> Time.past(10, "w") 
+        >>> from gidown.advanced import Time
+        >>> Time.past(10, "w")
+        tbs=qdr:10w
         
         Allowed units of time:
         

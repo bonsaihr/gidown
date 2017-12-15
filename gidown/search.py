@@ -1,6 +1,6 @@
 """
 gidown.search
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
 This module implements functions and classes for acquiring images from google image search.
 
 :license: Apache2, see LICENSE for more details.
