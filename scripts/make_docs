@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cd docs
+
+sphinx-apidoc -MEfeT ../gidown -o source/api
+rm source/api/gidown.rst
+
+make html
