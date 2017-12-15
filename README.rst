@@ -10,11 +10,21 @@ options there might be less results).
 Installation
 ------------
 
-To install all requirements run:
+To install using pip run:
 
 .. code:: bash
 
-    pip install -r requirements.txt 
+    pip install gidown
+
+
+If you wish to install from source clone the repository and run setup:
+
+.. code:: bash
+
+    git clone https://github.com/bonsaihr/gidown.git
+    cd gidown
+    python setup.py install
+
 
 Usage
 -----
