@@ -9,8 +9,8 @@ and saves them to *./out*.
 """
 import os
 
-from gis.advanced import Type, Size
-from gis import image_query
+from gidown.advanced import Type, Size
+from gidown import image_query
 
 from multiprocessing import Pool, cpu_count
 
@@ -22,7 +22,10 @@ def save(args):
     :param args: tuple of (image: GoogleSearchImage, root: str, name: str)
     """
     image, root, name = args
-    image.save(os.path.join(root, name), auto_ext=True)
+    try:
+        image.save(os.path.join(root, name), auto_ext=True)
+    except:
+        pass
 
 
 def main():
